@@ -1,0 +1,43 @@
+﻿<Page
+    x:Class="TestApp.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TestApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:TestApp.Models"
+    mc:Ignorable="d"
+    RequestedTheme="Dark">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <SplitView x:Name="SplitView">
+            <SplitView.PaneBackground>
+                <SolidColorBrush Color="{StaticResource SystemAccentColor}" />
+            </SplitView.PaneBackground>
+            <SplitView.Pane>
+                <Grid>
+                    <StackPanel VerticalAlignment="Top" Height="64" Orientation="Horizontal">
+                        <Button Height="64" Width="64" FontSize="24" x:Name="BackButton" FontFamily="Segoe MDL2 Assets" Content="&#xE0A6;" Margin="0 0 16 0" Click="HamburgerButton_Click"/>
+                        <TextBlock VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" Text="Subreddits" />
+                    </StackPanel>
+                </Grid>
+            </SplitView.Pane>
+            <StackPanel Orientation="Vertical">
+                <StackPanel VerticalAlignment="Top" Height="64" Orientation="Horizontal">
+                    <StackPanel.Background>
+                        <SolidColorBrush Color="{StaticResource SystemAccentColor}" />
+                    </StackPanel.Background>
+                    <Button Height="64" Width="64" FontSize="24" x:Name="HamburgerButton" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" Margin="0 0 16 0" Click="HamburgerButton_Click"/>
+                    <TextBlock VerticalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}" Text="{x:Bind ViewModel.SubredditName, Mode=OneWay}" />
+                </StackPanel>
+                <ListView ItemsSource="{x:Bind ViewModel.Posts}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="models:Post">
+                            <TextBlock Text="{x:Bind Title}" />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+        </SplitView>
+    </Grid>
+</Page>
