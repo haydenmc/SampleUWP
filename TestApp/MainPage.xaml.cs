@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using TestApp.Models;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -39,6 +40,27 @@ namespace TestApp
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)
         {
             SplitView.IsPaneOpen = !SplitView.IsPaneOpen;
+        }
+
+        private void SubredditPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel.ChangeSubreddit("/r/all");
+        }
+
+        private void SubredditList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ViewModel.ChangeSubreddit((string)SubredditList.SelectedItem);
+        }
+
+        private async void PostList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (PostList.SelectedItem == null)
+            {
+                return;
+            }
+            var uri = new Uri(((Post)PostList.SelectedItem).Url);
+            PostList.SelectedItem = null;
+            await Launcher.LaunchUriAsync(uri);
         }
     }
 }
